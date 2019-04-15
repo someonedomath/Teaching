@@ -1,0 +1,20 @@
+#+Title: TA's notes for the stochastic processes class at Peking University, 2019
+#+Author: Zhenyao Sun
+
+* Basic Information
+
+** I am the teaching assistant in the class Advanced in Stochastic processes at Peking University, spring 2019.
+
+** Book we use: https://services.math.duke.edu/~rtd/PTE/PTE5_011119.pdf
+
+** For more information about this class see http://www.math.pku.edu.cn/teachers/dayue/Homepage/instruction.htm
+* Solutions to the Selected Exercises in R. Durrett's Probability: Theory and Examples, 5th edition.
+** Solution for 6.3 and 6.2
+*** 6.2.1
+    Show tha if $X\in L^p$ with $p>1$ then the convergence in Theorem 6.2.1 occurs in $L^p$.
+*** 6.2.2
+*** 6.2.3
+*** 6.3.1
+*** 6.3.2
+*** 6.3.3
+*** 6.3.4
