@@ -1,0 +1,84 @@
+% * Preamble
+% ** Document class
+\documentclass[12pt,a4paper]{amsart}
+\setlength{\textwidth}{\paperwidth}
+\addtolength{\textwidth}{-2in}
+\calclayout
+% ** Encoding information
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+% \usepackage[UTF8]{ctex} 
+% You need XeTeX to build ctex based document 
+% ** packages about math
+\usepackage{mathtools}
+\mathtoolsset{showonlyrefs}
+\usepackage{mathrsfs}
+\usepackage{stackrel}
+\usepackage[backref]{hyperref}
+\usepackage{comment}
+% ** theorem environment definition
+\usepackage{amsthm}
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{cor}[thm]{Corollaray}
+\newtheorem{conj}[thm]{Conjecture}
+\theoremstyle{definition}
+\newtheorem{defi}[thm]{Definition}
+\newtheorem{exa}[thm]{Example}
+\newtheorem{asp}{Assumption}
+\theoremstyle{remark}
+\newtheorem*{exe}{Exercise}
+\newtheorem{rem}[thm]{Remark}
+\numberwithin{equation}{section}
+\allowdisplaybreaks
+% * Document
+% ** BEGIN
+\begin{document}
+% ** Basic Info
+\title
+[short title]
+{long title}
+\author
+[Z. Sun]
+{Zhenyao Sun}
+\address
+{Zhenyao Sun\\
+School of Mathematical Sciences\\
+Peking University\\
+Beijing, P. R. China, 100871}
+\email{zhenyao.sun@pku.edu.cn}
+\begin{abstract}
+  TBD
+\end{abstract}
+\maketitle
+% ** Section: HW for 6.5
+\begin{exe}[6.5.1]
+Consider the convergence in (a) of Theorem 6.4.1. Let $X_{m,m+k}=f(k)\geq 0$, where $f(k)/k$ is decreasing, and check that $X_{m,m+k}$ is subaddditive.
+\end{exe}
+\begin{exe}[6.5.2.]
+Consider the longest common subsequence problem, Example 6.4.4. when $X_1,X_2,\dots$ and $Y_1,Y_2,\dots$ are i.i.d. and take the values $0$ and $1$ with probability $1/2$ each.
+(a) Compute $EL_1$ and $EL_2/2$ to get lower bounds on $\gamma$.
+(b) Show $\gamma < 1$ by computing the expected number of $i$ and $j$ sequence of length $K=an$ with the desired property. 
+\end{exe}
+\begin{exe}[6.5.3.]
+Given a rate one Poisson process in $[0,\infty)\times [0,\infty)$, let $X_1,Y_1$ be the point that minimizes $x+y$.
+Let $(X_2,Y_2)$ be the point in $[X_1,\infty) \times [X_1,\infty)$ that minimizes $x+y$, and so on.
+Use this construction to show that in Example 6.5.2. $\gamma \geq (8/\pi)^{1/2} > 1.59$. 
+\end{exe} 
+\begin{exe}[6.5.4.]
+Let $\pi_n$ be a random permutation of $\{1,\dots,n\}$ and let $J_k^n$ be the number of subsets of $\{1,\dots,n\}$ of size $k$ so that the associated $\pi_n(j)$ form an increasing subsequence.
+Compute $EJ_k^n$ and take $k\sim \alpha n^{1/2}$ to conclude that in Example 6.5.2. $\gamma \leq e$.
+\end{exe}
+\begin{exe}[6.5.5.]
+Let $\phi(\theta) = E \exp(-\theta t_i)$ and
+\begin{align}
+Y_n =\left( \mu \phi(\theta) \right)^{-n} \sum_{i=1}^{Z_n} \exp\left( -\theta T_n(i) \right)
+\end{align}
+where the sum is over individuals in generation $n$ and $T_n(i)$ is the $i$th person's birth time.
+Show that $Y_n$ is a nonnegative martingale and use this to conclude that if $\exp(-\theta a)/\mu \phi(\theta) > 1$, then $P(X_{0,n}\leq an)\to 0$. 
+A little thought reveals that this bound is the same as the answer in the answer in the last exercise.
+\end{exe}
+% ** END
+\end{document}
