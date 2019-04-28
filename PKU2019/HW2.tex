@@ -54,14 +54,89 @@ Beijing, P. R. China, 100871}
 \end{abstract}
 \maketitle
 % ** Section: HW for 6.5
+% *** 6.5.1.
 \begin{exe}[6.5.1]
-Consider the convergence in (a) of Theorem 6.4.1. Let $X_{m,m+k}=f(k)\geq 0$, where $f(k)/k$ is decreasing, and check that $X_{m,m+k}$ is subaddditive.
+To show that the convergence in (a) of Theorem 6.4.1. may occur arbitrarily slowly, let $X_{m,m+k}=f(k)\geq 0$, where $f(k)/k$ is decreasing, and check that $X_{m,m+k}$ is subaddditive.
 \end{exe}
+\begin{proof}
+Verify (i): 
+\begin{align}
+X_{0,m}+X_{m,n} 
+&= f(m) + f(n-m)
+= m \frac{f(m)}{m} + (n-m)  \frac{f(n-m)}{n-m} 
+\\&\geq m \frac{f(n)}{n} + (n-m) \frac{f(n)}{n}
+= f(n) 
+= X_{0,n}.
+\end{align}
+
+Verify (ii): For each $k$, $(X_{nk,(n+1)k})_{n\geq 1}= (f(k))_{n\geq 1}$ is obviously a stationary sequence.
+
+Verify (iii): The distribution of $(X_{m,m+k})_{k\geq 1} = (f(k))_{k\geq 1}$ obviously does not depend on $m$.
+
+Verify (iv): Obviously $EX_{0,1}^+=f(1)<\infty$. 
+Denote by $\gamma_0 := \lim_{k\to \infty} f(k)/k \geq 0$, then we do have $EX_{0,n}= f(n)\geq \gamma_0 n$ and $\gamma_0 > -\infty$. 
+\end{proof}
+% *** 6.5.2.
 \begin{exe}[6.5.2.]
 Consider the longest common subsequence problem, Example 6.4.4. when $X_1,X_2,\dots$ and $Y_1,Y_2,\dots$ are i.i.d. and take the values $0$ and $1$ with probability $1/2$ each.
 (a) Compute $EL_1$ and $EL_2/2$ to get lower bounds on $\gamma$.
 (b) Show $\gamma < 1$ by computing the expected number of $i$ and $j$ sequence of length $K=an$ with the desired property. 
 \end{exe}
+\begin{proof}
+(a) Since $L_{0,1} = [0,1] \cap \mathbb Z$, we have
+\begin{align}
+E L_{0,1} 
+= P(L_{0,1} = 1) 
+= P(X_1 = Y_1)
+= 1/2.
+\end{align}
+Similarly, since $L_{0,2} = [0,2]\cap \mathbb Z$, we have
+\begin{align}
+E L_{0,2}
+& = P(L_{0,2} = 1) + 2P(L_{0,2} = 2)
+= \left( 1- P(L_{0,2} = 0) - P(L_{0,2} = 2) \right) + 2 P(L_{0,2} = 2)
+\\&= 1 + P(L_{0,2} = 2) - P(L_{0,2} = 0)
+= 1+ P(X_1=Y_1, X_2= Y_2) - P(X_1 = X_2 \neq Y_1 = Y_2)
+\\& = 1 + 1/4 - 1/8 
+= 9/8
+\end{align} 
+So we already know that 
+\begin{align}
+\gamma = \sup_{m\geq 1} E(L_{0,m})/m \geq 9/16.
+\end{align}
+
+(b) For each $k,n \in \mathbb N$ with $k\leq n$, denote by $\mathcal I_{n,k}:= \{ (i_1,\dots, i_k): 1< i_1<\dots < i_k \leq n \}$ the collection of all increasing multi-index with length $k$ in the index space $\{1,2,\dots,n\}$.
+For each $I = (i_1,\dots, i_k) \in \mathcal I_{n,k}$, denote by
+$X_I:= (X_{i_1},X_{i_2},\dots, X_{i_k})$ the $I$-subsequence of the process $(X_k)_{k\in \mathbb N}$.
+Similarly, we can define $Y_I$ for each $I\in \mathcal I_{n,k}$. 
+Note that there exists a constant $C>0$ such that for each integers $0 < k < n$, we have
+\begin{align}
+P\left( L_{0,n} \geq k \right)
+&= P(\exists I,J\in \mathcal I_{n,k} ~\text{s.t.}~ X_I = Y_J)
+\leq \sum_{I,J\in \mathcal I_{n,k}} P(X_I =Y_J)
+\\&= \# \{I,J\in \mathcal I_{n,k}\}\cdot 2^{-k}
+=\left(\frac{n!}{k!(n-k)!}\right)^2  2^{-k}
+\\&\leq C \left( \frac{n^{n+1/2}e^{-n}}{k^{k+1/2}e^{-k} (n-k)^{n-k+1/2} e^{-{n-k}}} 2^{-k}\right)^2,\quad \text{by Stirling's formula}
+\\& \overset{a:=n/k}{=} C \left( \frac{n^{n+1/2}}{(an)^{an+1/2} ((1-a)n)^{(1-a)n+1/2}} 2^{-na} \right)^2 
+%! \\& = C \left( \frac{1}{a^{an+1/2} n^{1/2} (1-a)^{(1-a)n+1/2}} 2^{-na} \right)^2 
+%! \\& = C n^{-1}\exp \left( -2 (an+1/2)\ln a - 2((1-a)n +1/2)\ln (1-a) - 2na\ln 2 \right)
+%! \\& = C n^{-1}\exp \left( -2 n a\ln a  -\ln a - 2(1-a)n \ln(1-a) -\ln (1-a) - 2na\ln 2 \right)
+%! \\& = C n^{-1}\exp \left( -2 n (a\ln a+(1-a)\ln (1-a) + a \ln 2)  -\ln a(1-a) \right)
+\\& = C \frac{1}{a(1-a)n}\exp \left( -2 n\ln \left ( a^a (1-a)^{1-a} 2^a\right)  \right).
+\end{align}
+Denote by $g(a) = a^a(1-a)^{1-a}2^a$ for each $a \in (0,1)$, then it holds that $g(a) \xrightarrow[a\uparrow 1]{} 2$, which says that there exists an $0<a_0 < 1$ such that $g(a_0) > 0$. 
+Now taking $k_n = \lfloor a_0 n \rfloor$, according to $a_n:=k_n/n \to a_0$, we have
+\begin{align}
+\sum_{n \in \mathbb N} P\left( \frac{L_{0,n}}{n} \geq a_0 \right)
+\leq \sum_{n\in \mathbb N} P\left(L_{0,n} \geq k_n \right)
+\leq  C \sum_{n\in \mathbb N} \frac{1}{a_n(1-a_n)n}\exp \left( -2n \ln g(a_n) \right) < \infty.
+\end{align}
+Therefore, B-C lemma says that almost surely
+\begin{align}
+\gamma = \lim_{n\to \infty} \frac{L_{0,n}}{n} \leq a_0 < 1.
+\end{align}
+\end{proof}
+% *** 6.5.3
 \begin{exe}[6.5.3.]
 Given a rate one Poisson process in $[0,\infty)\times [0,\infty)$, let $X_1,Y_1$ be the point that minimizes $x+y$.
 Let $(X_2,Y_2)$ be the point in $[X_1,\infty) \times [X_1,\infty)$ that minimizes $x+y$, and so on.
