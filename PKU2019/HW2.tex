@@ -38,8 +38,8 @@
 \begin{document}
 % ** Basic Info
 \title
-[short title]
-{long title}
+[Solutions]
+{Solutions to the Selected Exercises in R. Durrett's Probability: Theory and Examples, II}
 \author
 [Z. Sun]
 {Zhenyao Sun}
@@ -49,9 +49,9 @@ School of Mathematical Sciences\\
 Peking University\\
 Beijing, P. R. China, 100871}
 \email{zhenyao.sun@pku.edu.cn}
-\begin{abstract}
-  TBD
-\end{abstract}
+%\begin{abstract}
+%  TBD
+%\end{abstract}
 \maketitle
 % ** Section: HW for 6.5
 % *** 6.5.1.
@@ -155,9 +155,9 @@ Note that $N$ is a (random) atomic measure, therefore, it is valid to talk about
 According to its definition, $(X_1,Y_1)$ is a point of the atomic measure $N$ in $[0,\infty)^2$ which minimizes $x+y$. 
 And $(X_2,Y_2)$ is the point in $[X_1,\infty) \times [Y_1,\infty)$ which minimizes $x+y$. 
 
-We admit the following fact:
+We claim the following fact:
 $\left(  (X_{k+1}, Y_{k+1}) - (X_k, Y_k)\right)_{k \in \mathbb N}$ are i.i.d. random variables with the same distribution of $(X_1,Y_1)$.
-This fact is crucial. Its proof relies on the strong Markov property of the Poisson point processes. Here we omit the proof.
+This fact is crucial. Its proof relies on the strong Markov property of the Poisson point processes. Here we omit the details.
 
 Note that for each $t\geq 0$, we have
 \begin{align}
@@ -202,8 +202,30 @@ There exists a constant $C>0$ such that for each $0<k< n$, we have
 = \sum_{h \in \mathcal H_{n,k}} P\left( \left(\pi_n(h_i)\right)_{i=1}^k~\text{is increasing} \right)
 = \# \mathcal H_{n,k} \cdot \frac{ C_n^k \cdot (n-k)!}{n!}
 \\&= \frac{n!}{k!(n-k)!k!}
-\leq C
+\leq \frac{n^k}{(k!)^2}
+%  \leq C \frac{n^{n+\frac{1}{2}}e^{-n}}{ k^{k+\frac{1}{2}} e^{-k} (n-k)^{n-k+\frac{1}{2}}e^{-(n-k)} k^{k+\frac{1}{2}} e^{-k} },
+ \leq C \left(\frac{e\sqrt n}{ k } \right )^{2k},
+\quad \text{by Stirling formula}. 
 \end{align}
+Therefore if $k \sim \alpha n^{1/2}$ with $\alpha > e$, we have
+\begin{align}
+ \sum_{n\in \mathbb N}E J_k^n < \infty.
+\end{align}
+Now let $l(\pi_n)$ be the length of the longest increasing sequence in the random permutation $\pi_n$, then
+\begin{align}
+  & \sum_{n\in \mathbb N} P\left( \frac{l(\pi_n)}{n^{1/2}} \geq  \alpha \right)
+  =\sum_{n\in \mathbb N} P\left( J_{\left\lceil \alpha n^{1/2}\right\rceil}^n \geq 1\right)
+  \\& \leq \sum_{n\in \mathbb N} E J_{\left\lceil \alpha n^{1/2}\right\rceil}^n
+  < \infty 
+\end{align}
+This, and B-C lemma says that
+\begin{align}
+\gamma 
+:= \lim_{n\to \infty} \frac{l(\pi_n)}{n^{1/2}}
+\leq \alpha,
+\quad \text{almost surely}.
+\end{align}
+Finally, since $\alpha$ is chosen arbitrarily in $(e,\infty)$, we have that $\gamma \leq e$ almost surely.
 \end{proof}
 % *** 6.5.5.
 \begin{exe}[6.5.5.]
@@ -215,5 +237,32 @@ where the sum is over individuals in generation $n$ and $T_n(i)$ is the $i$th pe
 Show that $Y_n$ is a nonnegative martingale and use this to conclude that if $\exp(-\theta a)/\mu \phi(\theta) > 1$, then $P(X_{0,n}\leq an)\to 0$. 
 A little thought reveals that this bound is the same as the answer in the answer in the last exercise.
 \end{exe}
+\begin{proof}
+Let $\mathcal F_n$ be the filtration which contains all the information about the birth times of all the persons whose generations are smaller than or equal to $n$.
+Denote by $Z_1^{(n,i)}$ the number of children of $i$-th particle in generation $n$. 
+Denote by $T_1^{(n,i)}(k)$ the birth time of the $k$-th child of the $i$-th particle in generation $n$.
+It can be verified from the independence of the birth of each particles that
+\begin{align}
+  &E\left[ Y_{n+1}\middle|  \mathcal F_n  \right]
+  = E \left[\left(\mu \phi(\theta)\right)^{-(n+1)} \sum_{i=1}^{Z_n} \sum_{k=1}^{Z_1^{(n,i)}} \exp(-\theta T_1^{(n,i)}(k)) \middle| \mathcal F_n \right]
+  \\&= \left(\mu \phi(\theta)\right)^{-(n+1)} \sum_{i=1}^{Z_n} \exp(-\theta T_n(i)) E \left[ \sum_{k=1}^{Z_1^{(n,i)}} \exp\left(-\theta\left( T_1^{(n,i)}(k) - T_n(i)\right)\right) \middle| \mathcal F_n \right]
+  \\&= \left(\mu \phi(\theta)\right)^{-(n+1)} \sum_{i=1}^{Z_n} \exp(-\theta T_n(i)) E \left[ \sum_{k=1}^{Z_1} \exp\left(-\theta T_1(k)\right) \right]
+= Y_n.
+\end{align}
+This says that $Y_n$ is a non-negative martingale.
+Therefore, it has a finite almost sure limit, say $Y_\infty$.
+Observe that, we always have
+\begin{align}
+  \frac{e^{-\theta X_{0,n}}}{\left( \mu \phi(\theta) \right)^n} \leq \frac{1}{\left( \mu \phi(\theta) \right)^n} \sum_{i=1}^{Z_n} \exp\left( -\theta T_n(i) \right).
+\end{align}
+Therefore, if $\exp(-\theta a)/\mu \phi(\theta) > 1$, then
+\begin{align}
+P(X_{0,n} \leq an)
+&= P(e^{-\theta X_{0,n}} \geq e^{-\theta a n}) 
+\leq \frac{E e^{-\theta X_{0,n}}}{e^{-\theta a n}}
+\\&\leq \frac{E[ \sum_{i=1}^{Z_n} e^{-\theta T_{n}(i)}]}{\mu^n \phi(\theta)^n} \left(\frac{\mu \phi(\theta)}{e^{-\theta a}}\right)^n
+= Y_n (1-\epsilon)^n \to 0.
+\end{align}
+\end{proof}
 % ** END
 \end{document}
