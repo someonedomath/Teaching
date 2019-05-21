@@ -9,14 +9,14 @@
 \usepackage[T1]{fontenc}
 % \usepackage[UTF8]{ctex} 
 % You need XeTeX to build ctex based document 
-% ** packages about math
+% ** Packages about math
 \usepackage{mathtools}
 \mathtoolsset{showonlyrefs}
 \usepackage{mathrsfs}
 \usepackage{stackrel}
 \usepackage[backref]{hyperref}
 \usepackage{comment}
-% ** theorem environment definition
+% ** Theorem environment definition
 \usepackage{amsthm}
 \theoremstyle{plain}
 \newtheorem{thm}{Theorem}[section]
@@ -263,6 +263,137 @@ P(X_{0,n} \leq an)
 \\&\leq \frac{E[ \sum_{i=1}^{Z_n} e^{-\theta T_{n}(i)}]}{\mu^n \phi(\theta)^n} \left(\frac{\mu \phi(\theta)}{e^{-\theta a}}\right)^n
 = Y_n (1-\epsilon)^n \to 0.
 \end{align}
+\end{proof}
+% ** Section: HW for 7.1
+% *** 7.1.1
+\begin{exe}[7.1.1.]
+  Given $s< t$ fine $P\left( B(s)>0, B(t)>0 \right)$.
+\end{exe}
+\begin{proof}
+  \begin{align}
+&P(B(s)>0, B(t) >0) 
+= P(B(s)>0, B(t)- B(s) > - B (s)) 
+   \\&= \int_0^\infty dx   \int_{-x}^\infty \frac{1}{\sqrt{2\pi s}}\cdot e^{- \frac{x^2}{2s}}\frac{1}{\sqrt{2\pi (t-s)}} e^{-\frac{y^2}{ 2(t-s)}} dy
+\\& = \frac{1}{4} +\frac{1}{2\pi} \arcsin \sqrt{\frac{s}{t}}.
+  \end{align}
+\end{proof}
+% *** 7.1.2
+\begin{exe}[7.1.2.]
+Find $E(B_1^2 B_2 B_3)$
+\end{exe}
+\begin{align}
+&E [ B_1^2 B_2 B_3] 
+  = E\left[ B_1^2 \left(B_1 + \left(B_2 - B_1\right)\right) \left( B_1 + \left( B_2 - B_1 \right) +\left( B_3 - B_2 \right) \right)\right]
+  \\&= E[B_1^4] + E\left[ B_1^2 \left( B_2 - B_1 \right)^2\right]
+  \\& = E[B_1^4] + E[B_1^2] E\left[ \left( B_2 - B_1 \right)^2 \right]
+\\& = 4.
+\end{align}
+% *** 7.1.4
+\begin{exe}[7.1.4.]
+$A \in \mathcal F_o$ if and only if there is a sequence of times $t_1, t_2, \cdots$ in $[0,\infty)$ and a $B \in \mathcal R^{\{1,2,\cdots\}}$ so that $A = \{w: (w(t_1), w(t_2),\cdots) \in B\}$.
+In words, all events in $\mathcal F_o$ depend on only countably many coordinates.
+\end{exe}
+\begin{proof}
+
+Let $\Omega = \mathbb R^{[0,\infty)}$. 
+Define coordinate process:
+\begin{align}
+X^{\omega}(t) = \omega(t), \forall \omega \in \Omega, t\geq 0.
+\end{align}
+Denote by 
+\begin{align}
+\mathcal I = \{I = (t_k)_{k \in \mathbb N}: \forall k \in \mathbb N, t_k \in [0,\infty)\}
+\end{align}
+the collection of all the time sequence.
+For each time sequence $I=(t_k)_{k \in \mathbb N}\in \mathcal I$, define a map $\psi_I$ from $\Omega$ to $\mathbb R^{\mathbb N}$ such that
+\begin{align}
+\psi_I(\omega):= (X^{\omega}(t_k))_{k \in \mathbb N}.
+\end{align}
+Define $[I] := \{t_k: k \in \mathbb N\}$.
+Consider a $\sigma$-field on $\Omega$ given by $\mathcal F_{[I]} = \sigma( X(t): t \in [I])$. 
+Then by standard measure theory, we have 
+\begin{align}
+\label{eq:key_for_714}
+\mathcal F_{[I]} = \{ \psi_I^{-1} B: B \in \mathcal R^{\mathbb N}\}.
+\end{align}
+
+Define the family of subsets of $\Omega$ by 
+\begin{align}
+\mathcal G := \{A \subset \Omega: \exists I \in \mathcal I, B \in \mathcal R^\mathbb N~s.t.~A = \psi_I^{-1} B\}.
+\end{align}
+What we needs to proof for this exercise is that $\mathcal G \subset \mathcal F_o$ and $\mathcal F_o \subset \mathcal G$.
+
+1. We claim that $\mathcal G \subset \mathcal F_o$. 
+In fact for each $ A \in \mathcal G$, there is an $I \in \mathcal I$ and $B \in \mathcal R^\mathbb N$ such that $A = \psi_I^{-1}B$. 
+Therefore $ A \in \mathcal F_{[I]} \subset \mathcal F_o$.
+
+2. We claim that $\mathcal G$ is a $\sigma$-field. 
+In fact, if $(A_k)_{k \in \mathbb N}$ is a sequence of elements in $\mathcal G$, then there exists a sequence of $\mathcal I$-elements $(I_k)_{k \in \mathbb N}$ and a sequence of $\mathcal R^\mathbb N$-elements $(B_k)_{k \in \mathbb N}$ such that
+\begin{align}
+A_k = \psi_{I_k}^{-1}B_k, \quad k \in \mathbb N.
+\end{align}
+We also have that there exists a $J \in \mathcal I$ such that
+\begin{align}
+[J] = \bigcup_{k \in \mathbb N} [I_k]
+\end{align}
+simply because the right hand side is countable. 
+Now, from \eqref{eq:key_for_714}, we have $\bigcup_{k\in \mathbb N} A_k \in \sigma(\mathcal F_{[I_k]}: k \in \mathbb N) = \mathcal F_{[J]}\subset \mathcal G$. 
+The rest of this claim is elementary.
+
+3. We claim that $\mathcal F_o \subset \mathcal G$. In fact, for each $t\in [0, \infty)$, we have $X(t)$ is $\mathcal G$-measurable simply because $\mathcal F_{t}\subset \mathcal G$. 
+\end{proof}
+% *** 7.1.5
+\begin{exe}[7.1.5.]
+Looking at the proof of Theorem 7.1.6. carefully shows that if $\gamma > 5/6$ then $B_t$ is not H\"{o}lder continuous with exponent $\gamma$ at any point in $[0,1]$. 
+Show, by considering $k$ increments instead of $3$, that the last conclusion is true for all $\gamma > 1/2 + 1/k$.
+\end{exe}
+\begin{proof}
+Fix a constant $C < \infty$.
+Let $A_n = \{w: \exists s \in [0,1]~s.t.~ \forall |t-s|\leq \frac{k}{n}, |B_t - B_s| \leq C |t-s|^\gamma\}$.
+For $1 \leq i \leq n - k + 1$, let 
+\begin{align}
+Y_{i,n} = \max\{|B(\frac{i+j}{n}) - B(\frac{i+j-1}{n})|: j = 0,1,\dots,k - 1\}.
+\end{align}
+and
+\begin{align}
+B_n = \{\text{at least one } Y_{k,n} \leq \frac{(2k - 1)C}{ n^{\gamma}}\}.
+\end{align}
+Then it can be verified that $A_n \subset B_n$.
+Therefore
+\begin{align}
+P(A_n) &\leq P(B_n)
+  \leq n P\left( |B(\frac{1}{n})| \leq \frac{(2k - 1) C}{n^{\gamma}} \right)^k
+\\& \leq n P(|B(1)|\leq \frac{(2k - 1) C}{n^{\gamma - \frac{1}{2}}})^k
+  \\& \leq n \left( \frac{2(2k-1) C}{ \sqrt{2\pi} n^{\gamma - \frac{1}{2}}} \right)^k 
+\to 0.
+\end{align}
+Rest is the same as Theorem 7.1.6.
+\end{proof}
+% *** 7.1.6
+\begin{exe}[7.1.6.]
+Fix $t$ and let $\Delta_{m,n} = B(tm2^{-n}) - B(t(m-1)2^{-n})$.
+Compute
+\begin{align}
+  E\left[ \left( \sum_{m \leq 2^n} \Delta^2_{m,n} - t \right)^2 \right]
+\end{align}
+ and use Borel-Cantelli to conclude that $\sup_{m \leq 2^n} \Delta_{m,n}^2 \to t$ a.s. as $n \to \infty$. 
+\end{exe}
+\begin{proof}
+\begin{align}
+  &E\left[\left( \sum_{m=1}^{2^n} \Delta_{m,n}^2 - t \right)^2\right]
+    = \sum_{m = 1}^{2^n} E\left( \Delta_{m,n}^2 - \frac{t}{2^n} \right)^2
+\\& = 2^n E\left[\left(B(\frac{t}{2^n}) - \frac{t}{2^n}\right)^2\right] = t^2 2^{-n +1}.
+\end{align}
+Therefore,
+\begin{align}
+  P\left( \left| \sum_{m=1}^{2^n} \Delta_{m,n}^2 - t \right| > \frac{1}{n} \right)
+\leq n^2 t^2 2^{-n +1}.
+\end{align}
+This says that 
+\begin{align}
+P\Big( \Big| \sum_{m = 1}^{2^n} \Delta_{m,n}^2 - t \Big| > \frac{1}{n}~i.o.  \Big) = 0.
+\end{align}
+So we get the desired result by BC Lemma.
 \end{proof}
 % ** END
 \end{document}
