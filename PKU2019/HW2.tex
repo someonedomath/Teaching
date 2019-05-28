@@ -1,0 +1,543 @@
+% * Preamble
+% ** Document class
+\documentclass[12pt,a4paper]{amsart}
+\setlength{\textwidth}{\paperwidth}
+\addtolength{\textwidth}{-2in}
+\calclayout
+% ** Encoding information
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+% \usepackage[UTF8]{ctex} 
+% You need XeTeX to build ctex based document 
+% ** Packages about math
+\usepackage{mathtools}
+\mathtoolsset{showonlyrefs}
+\usepackage{mathrsfs}
+\usepackage{stackrel}
+\usepackage[backref]{hyperref}
+\usepackage{comment}
+% ** Theorem environment definition
+\usepackage{amsthm}
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{cor}[thm]{Corollaray}
+\newtheorem{conj}[thm]{Conjecture}
+\theoremstyle{definition}
+\newtheorem{defi}[thm]{Definition}
+\newtheorem{exa}[thm]{Example}
+\newtheorem{asp}{Assumption}
+\theoremstyle{remark}
+\newtheorem*{exe}{Exercise}
+\newtheorem{rem}[thm]{Remark}
+\numberwithin{equation}{section}
+\allowdisplaybreaks
+% * Document
+% ** BEGIN
+\begin{document}
+% ** Basic Info
+\title
+[Solutions]
+{Solutions to the Selected Exercises in R. Durrett's Probability: Theory and Examples, II}
+\author
+[Z. Sun]
+{Zhenyao Sun}
+\address
+{Zhenyao Sun\\
+School of Mathematical Sciences\\
+Peking University\\
+Beijing, P. R. China, 100871}
+\email{zhenyao.sun@pku.edu.cn}
+%\begin{abstract}
+%  TBD
+%\end{abstract}
+\maketitle
+% ** Section: HW for 6.5
+% *** 6.5.1.
+\begin{exe}[6.5.1]
+To show that the convergence in (a) of Theorem 6.4.1. may occur arbitrarily slowly, let $X_{m,m+k}=f(k)\geq 0$, where $f(k)/k$ is decreasing, and check that $X_{m,m+k}$ is subaddditive.
+\end{exe}
+\begin{proof}
+Verify (i): 
+\begin{align}
+X_{0,m}+X_{m,n} 
+&= f(m) + f(n-m)
+= m \frac{f(m)}{m} + (n-m)  \frac{f(n-m)}{n-m} 
+\\&\geq m \frac{f(n)}{n} + (n-m) \frac{f(n)}{n}
+= f(n) 
+= X_{0,n}.
+\end{align}
+
+Verify (ii): For each $k$, $(X_{nk,(n+1)k})_{n\geq 1}= (f(k))_{n\geq 1}$ is obviously a stationary sequence.
+
+Verify (iii): The distribution of $(X_{m,m+k})_{k\geq 1} = (f(k))_{k\geq 1}$ obviously does not depend on $m$.
+
+Verify (iv): Obviously $EX_{0,1}^+=f(1)<\infty$. 
+Denote by $\gamma_0 := \lim_{k\to \infty} f(k)/k \geq 0$, then we do have $EX_{0,n}= f(n)\geq \gamma_0 n$ and $\gamma_0 > -\infty$. 
+\end{proof}
+% *** 6.5.2.
+\begin{exe}[6.5.2.]
+Consider the longest common subsequence problem, Example 6.4.4. when $X_1,X_2,\dots$ and $Y_1,Y_2,\dots$ are i.i.d. and take the values $0$ and $1$ with probability $1/2$ each.
+(a) Compute $EL_1$ and $EL_2/2$ to get lower bounds on $\gamma$.
+(b) Show $\gamma < 1$ by computing the expected number of $i$ and $j$ sequence of length $K=an$ with the desired property. 
+\end{exe}
+\begin{proof}
+(a) Since $L_{0,1} \in [0,1] \cap \mathbb Z$, we have
+\begin{align}
+E L_{0,1} 
+= P(L_{0,1} = 1) 
+= P(X_1 = Y_1)
+= 1/2.
+\end{align}
+Similarly, since $L_{0,2} \in [0,2]\cap \mathbb Z$, we have
+\begin{align}
+E L_{0,2}
+& = P(L_{0,2} = 1) + 2P(L_{0,2} = 2)
+= \left( 1- P(L_{0,2} = 0) - P(L_{0,2} = 2) \right) + 2 P(L_{0,2} = 2)
+\\&= 1 + P(L_{0,2} = 2) - P(L_{0,2} = 0)
+= 1+ P(X_1=Y_1, X_2= Y_2) - P(X_1 = X_2 \neq Y_1 = Y_2)
+\\& = 1 + 1/4 - 1/8 
+= 9/8
+\end{align} 
+So we already know that 
+\begin{align}
+\gamma = \sup_{m\geq 1} E(L_{0,m})/m \geq 9/16.
+\end{align}
+
+(b) For each $k,n \in \mathbb N$ with $k\leq n$, denote by $\mathcal I_{n,k}:= \{ (i_1,\dots, i_k): 1< i_1<\dots < i_k \leq n \}$ the collection of all increasing multi-index with length $k$ in the index space $\{1,2,\dots,n\}$.
+For each $I = (i_1,\dots, i_k) \in \mathcal I_{n,k}$, denote by
+$X_I:= (X_{i_1},X_{i_2},\dots, X_{i_k})$ the $I$-subsequence of the process $(X_k)_{k\in \mathbb N}$.
+Similarly, we can define $Y_I$ for each $I\in \mathcal I_{n,k}$. 
+Note that there exists a constant $C>0$ such that for each integers $0 < k < n$, we have
+\begin{align}
+P\left( L_{0,n} \geq k \right)
+&= P(\exists I,J\in \mathcal I_{n,k} ~\text{s.t.}~ X_I = Y_J)
+\leq \sum_{I,J\in \mathcal I_{n,k}} P(X_I =Y_J)
+\\&= \# \{I,J\in \mathcal I_{n,k}\}\cdot 2^{-k}
+=\left(\frac{n!}{k!(n-k)!}\right)^2  2^{-k}
+\\&\leq C \left( \frac{n^{n+1/2}e^{-n}}{k^{k+1/2}e^{-k} (n-k)^{n-k+1/2} e^{-{n-k}}} 2^{-k}\right)^2,\quad \text{by Stirling's formula}
+\\& \overset{a:=n/k}{=} C \left( \frac{n^{n+1/2}}{(an)^{an+1/2} ((1-a)n)^{(1-a)n+1/2}} 2^{-na} \right)^2 
+%! \\& = C \left( \frac{1}{a^{an+1/2} n^{1/2} (1-a)^{(1-a)n+1/2}} 2^{-na} \right)^2 
+%! \\& = C n^{-1}\exp \left( -2 (an+1/2)\ln a - 2((1-a)n +1/2)\ln (1-a) - 2na\ln 2 \right)
+%! \\& = C n^{-1}\exp \left( -2 n a\ln a  -\ln a - 2(1-a)n \ln(1-a) -\ln (1-a) - 2na\ln 2 \right)
+%! \\& = C n^{-1}\exp \left( -2 n (a\ln a+(1-a)\ln (1-a) + a \ln 2)  -\ln a(1-a) \right)
+\\& = C \frac{1}{a(1-a)n}\exp \left( -2 n\ln \left ( a^a (1-a)^{1-a} 2^a\right)  \right).
+\end{align}
+Denote by $g(a) = a^a(1-a)^{1-a}2^a$ for each $a \in (0,1)$, then it holds that $g(a) \xrightarrow[a\uparrow 1]{} 2$, which says that there exists an $0<a_0 < 1$ such that $g(a_0) > 1$. 
+Now taking $k_n = \lfloor a_0 n \rfloor$, according to $a_n:=k_n/n \to a_0$, we have
+\begin{align}
+\sum_{n \in \mathbb N} P\left( \frac{L_{0,n}}{n} \geq a_0 \right)
+\leq \sum_{n\in \mathbb N} P\left(L_{0,n} \geq k_n \right)
+\leq  C \sum_{n\in \mathbb N} \frac{1}{a_n(1-a_n)n}\exp \left( -2n \ln g(a_n) \right) < \infty.
+\end{align}
+Therefore, B-C lemma says that almost surely
+\begin{align}
+\gamma = \lim_{n\to \infty} \frac{L_{0,n}}{n} \leq a_0 < 1.
+\end{align}
+\end{proof}
+% *** 6.5.3
+\begin{exe}[6.5.3.]
+Given a rate one Poisson process in $[0,\infty)\times [0,\infty)$, let $X_1,Y_1$ be the point that minimizes $x+y$.
+Let $(X_2,Y_2)$ be the point in $[X_1,\infty) \times [Y_1,\infty)$ that minimizes $x+y$, and so on.
+Use this construction to show that in Example 6.5.2. $\gamma \geq (8/\pi)^{1/2} > 1.59$. 
+\end{exe} 
+\begin{proof}
+The definition of rate one Poisson point process $N$ is given by Example 3.7.7.. 
+More precisely, $N(\omega,A)$ is a random measure on $[0,\infty)^2$ such that
+\begin{itemize}
+\item
+For each $w\in \Omega$, $N(w,\cdot)$ is a $\mathbb N\cap \{\infty\}$-valued measure on $[0,\infty)^2$.
+\item
+For each Borel subset $A\subset [0,\infty)^2$, $N(\cdot, A)$ is a Poisson distributed random variable with mean $\mu(A)$, the Lebesgue measure of $A$.
+\end{itemize}
+Note that $N$ is a (random) atomic measure, therefore, it is valid to talk about the points of $N$.
+According to its definition, $(X_1,Y_1)$ is a point of the atomic measure $N$ in $[0,\infty)^2$ which minimizes $x+y$. 
+And $(X_2,Y_2)$ is the point in $[X_1,\infty) \times [Y_1,\infty)$ which minimizes $x+y$. 
+
+We claim the following fact:
+$\left(  (X_{k+1}, Y_{k+1}) - (X_k, Y_k)\right)_{k \in \mathbb N}$ are i.i.d. random variables with the same distribution of $(X_1,Y_1)$.
+This fact is crucial. Its proof relies on the strong Markov property of the Poisson point processes. Here we omit the details.
+
+Note that for each $t\geq 0$, we have
+\begin{align}
+&P(X_1+Y_1 > t) 
+= P \left( N\left\{(x,y): x\geq 0, y\geq 0, x+y\leq t \right\} = 0 \right)
+\\& = e^{- \int_{(x,y): x\geq 0, y\geq 0, x+y \leq t} \mu(dx,dy)}
+= e^{-\frac{t^2}{2}}.
+\end{align}
+Therefore, 
+\begin{align}
+E[X_1+Y_1] 
+= \int_0^\infty P(X_1 + Y_1 > t) dt 
+= \sqrt{\frac{\pi}{2}},
+\end{align}
+which, thanks to the symmetry, says that $EX_1 = EY_1 = \sqrt{\frac{\pi}{8}}$.
+Now, from Law of large numbers, we have almost surely
+\begin{align}
+\frac{Z_n}{n}:= \frac{\max(X_n,Y_n)}{n} \xrightarrow[n \to \infty]{} \sqrt{\frac{\pi}{8}}. 
+\end{align}
+On the other hand, denoted by $L_{0,s}$ length of the longest increasing path lying in the square $R_{0,n}$ with vertices $(0,0)$, $(0,s)$, $(s,0)$ and $(s,s)$.
+(Here the length of a path is simply the number of the 'Poisson' points on that path. So the length of a path is always an integer number.)  
+It is now obvious that $(X_1,Y_2),\dots, (X_n,Y_n)$ forms an increasing path in the square $R_{0, Z_n}$. 
+Therefore, we have $L_{0,Z_n} \geq n$.
+Using the result in Example 6.5.2., we have
+\begin{align}
+\gamma 
+= \lim_{n\to \infty} \frac{L_{0, Z_n}}{ Z_n}  
+\geq \lim_{n\to \infty} \frac{n}{ Z_n}
+= \sqrt{\frac{8}{\pi}}.
+\end{align}
+\end{proof}
+% *** 6.5.4.
+\begin{exe}[6.5.4.]
+Let $\pi_n$ be a random permutation of $\{1,\dots,n\}$ and let $J_k^n$ be the number of subsets of $\{1,\dots,n\}$ of size $k$ so that the associated $\pi_n(j)$ form an increasing subsequence.
+Compute $EJ_k^n$ and take $k\sim \alpha n^{1/2}$ to conclude that in Example 6.5.2. $\gamma \leq e$.
+\end{exe}
+\begin{proof}
+For each $k,n \in \mathbb N$ with $k\leq n$, denote by $\mathcal H_{n,k}$ the collection of all subset of $\{1,\dots, n\}$ with length $k$. For each $h \in \mathcal H_{n,k}$, we write $h = \{h_i: i=1,\dots, k\}$ such that $0< h_1< \dots < h_k\leq n$. 
+There exists a constant $C>0$ such that for each $0<k< n$, we have
+\begin{align}
+&E J_k^n 
+= \sum_{h \in \mathcal H_{n,k}} P\left( \left(\pi_n(h_i)\right)_{i=1}^k~\text{is increasing} \right)
+= \# \mathcal H_{n,k} \cdot \frac{ C_n^k \cdot (n-k)!}{n!}
+\\&= \frac{n!}{k!(n-k)!k!}
+\leq \frac{n^k}{(k!)^2}
+%  \leq C \frac{n^{n+\frac{1}{2}}e^{-n}}{ k^{k+\frac{1}{2}} e^{-k} (n-k)^{n-k+\frac{1}{2}}e^{-(n-k)} k^{k+\frac{1}{2}} e^{-k} },
+ \leq C \left(\frac{e\sqrt n}{ k } \right )^{2k},
+\quad \text{by Stirling formula}. 
+\end{align}
+Therefore if $k \sim \alpha n^{1/2}$ with $\alpha > e$, we have
+\begin{align}
+ \sum_{n\in \mathbb N}E J_k^n < \infty.
+\end{align}
+Now let $l(\pi_n)$ be the length of the longest increasing sequence in the random permutation $\pi_n$, then
+\begin{align}
+  & \sum_{n\in \mathbb N} P\left( \frac{l(\pi_n)}{n^{1/2}} \geq  \alpha \right)
+  =\sum_{n\in \mathbb N} P\left( J_{\left\lceil \alpha n^{1/2}\right\rceil}^n \geq 1\right)
+  \\& \leq \sum_{n\in \mathbb N} E J_{\left\lceil \alpha n^{1/2}\right\rceil}^n
+  < \infty 
+\end{align}
+This, and B-C lemma says that
+\begin{align}
+\gamma 
+:= \lim_{n\to \infty} \frac{l(\pi_n)}{n^{1/2}}
+\leq \alpha,
+\quad \text{almost surely}.
+\end{align}
+Finally, since $\alpha$ is chosen arbitrarily in $(e,\infty)$, we have that $\gamma \leq e$ almost surely.
+\end{proof}
+% *** 6.5.5.
+\begin{exe}[6.5.5.]
+Let $\phi(\theta) = E \exp(-\theta t_i)$ and
+\begin{align}
+Y_n =\left( \mu \phi(\theta) \right)^{-n} \sum_{i=1}^{Z_n} \exp\left( -\theta T_n(i) \right)
+\end{align}
+where the sum is over individuals in generation $n$ and $T_n(i)$ is the $i$th person's birth time.
+Show that $Y_n$ is a nonnegative martingale and use this to conclude that if $\exp(-\theta a)/\mu \phi(\theta) > 1$, then $P(X_{0,n}\leq an)\to 0$. 
+A little thought reveals that this bound is the same as the answer in the answer in the last exercise.
+\end{exe}
+\begin{proof}
+Let $\mathcal F_n$ be the filtration which contains all the information about the birth times of all the persons whose generations are smaller than or equal to $n$.
+Denote by $Z_1^{(n,i)}$ the number of children of $i$-th particle in generation $n$. 
+Denote by $T_1^{(n,i)}(k)$ the birth time of the $k$-th child of the $i$-th particle in generation $n$.
+It can be verified from the independence of the birth of each particles that
+\begin{align}
+  &E\left[ Y_{n+1}\middle|  \mathcal F_n  \right]
+  = E \left[\left(\mu \phi(\theta)\right)^{-(n+1)} \sum_{i=1}^{Z_n} \sum_{k=1}^{Z_1^{(n,i)}} \exp(-\theta T_1^{(n,i)}(k)) \middle| \mathcal F_n \right]
+  \\&= \left(\mu \phi(\theta)\right)^{-(n+1)} \sum_{i=1}^{Z_n} \exp(-\theta T_n(i)) E \left[ \sum_{k=1}^{Z_1^{(n,i)}} \exp\left(-\theta\left( T_1^{(n,i)}(k) - T_n(i)\right)\right) \middle| \mathcal F_n \right]
+  \\&= \left(\mu \phi(\theta)\right)^{-(n+1)} \sum_{i=1}^{Z_n} \exp(-\theta T_n(i)) E \left[ \sum_{k=1}^{Z_1} \exp\left(-\theta T_1(k)\right) \right]
+= Y_n.
+\end{align}
+This says that $Y_n$ is a non-negative martingale.
+Therefore, it has a finite almost sure limit, say $Y_\infty$.
+Observe that, we always have
+\begin{align}
+  \frac{e^{-\theta X_{0,n}}}{\left( \mu \phi(\theta) \right)^n} \leq \frac{1}{\left( \mu \phi(\theta) \right)^n} \sum_{i=1}^{Z_n} \exp\left( -\theta T_n(i) \right).
+\end{align}
+Therefore, if $\exp(-\theta a)/\mu \phi(\theta) > 1$, then
+\begin{align}
+P(X_{0,n} \leq an)
+&= P(e^{-\theta X_{0,n}} \geq e^{-\theta a n}) 
+\leq \frac{E e^{-\theta X_{0,n}}}{e^{-\theta a n}}
+\\&\leq \frac{E[ \sum_{i=1}^{Z_n} e^{-\theta T_{n}(i)}]}{\mu^n \phi(\theta)^n} \left(\frac{\mu \phi(\theta)}{e^{-\theta a}}\right)^n
+= Y_n (1-\epsilon)^n \to 0.
+\end{align}
+\end{proof}
+% ** Section: HW for 7.1
+% *** 7.1.1
+\begin{exe}[7.1.1.]
+  Given $s< t$ fine $P\left( B(s)>0, B(t)>0 \right)$.
+\end{exe}
+\begin{proof}
+  \begin{align}
+&P(B(s)>0, B(t) >0) 
+= P(B(s)>0, B(t)- B(s) > - B (s)) 
+   \\&= \int_0^\infty dx   \int_{-x}^\infty \frac{1}{\sqrt{2\pi s}}\cdot e^{- \frac{x^2}{2s}}\frac{1}{\sqrt{2\pi (t-s)}} e^{-\frac{y^2}{ 2(t-s)}} dy
+\\& = \frac{1}{4} +\frac{1}{2\pi} \arcsin \sqrt{\frac{s}{t}}.
+  \end{align}
+\end{proof}
+% *** 7.1.2
+\begin{exe}[7.1.2.]
+Find $E(B_1^2 B_2 B_3)$
+\end{exe}
+\begin{align}
+&E [ B_1^2 B_2 B_3] 
+  = E\left[ B_1^2 \left(B_1 + \left(B_2 - B_1\right)\right) \left( B_1 + \left( B_2 - B_1 \right) +\left( B_3 - B_2 \right) \right)\right]
+  \\&= E[B_1^4] + E\left[ B_1^2 \left( B_2 - B_1 \right)^2\right]
+  \\& = E[B_1^4] + E[B_1^2] E\left[ \left( B_2 - B_1 \right)^2 \right]
+\\& = 4.
+\end{align}
+% *** 7.1.4
+\begin{exe}[7.1.4.]
+$A \in \mathcal F_o$ if and only if there is a sequence of times $t_1, t_2, \cdots$ in $[0,\infty)$ and a $B \in \mathcal R^{\{1,2,\cdots\}}$ so that $A = \{w: (w(t_1), w(t_2),\cdots) \in B\}$.
+In words, all events in $\mathcal F_o$ depend on only countably many coordinates.
+\end{exe}
+\begin{proof}
+
+Let $\Omega = \mathbb R^{[0,\infty)}$. 
+Define coordinate process:
+\begin{align}
+X^{\omega}(t) = \omega(t), \forall \omega \in \Omega, t\geq 0.
+\end{align}
+Denote by 
+\begin{align}
+\mathcal I = \{I = (t_k)_{k \in \mathbb N}: \forall k \in \mathbb N, t_k \in [0,\infty)\}
+\end{align}
+the collection of all the time sequence.
+For each time sequence $I=(t_k)_{k \in \mathbb N}\in \mathcal I$, define a map $\psi_I$ from $\Omega$ to $\mathbb R^{\mathbb N}$ such that
+\begin{align}
+\psi_I(\omega):= (X^{\omega}(t_k))_{k \in \mathbb N}.
+\end{align}
+Define $[I] := \{t_k: k \in \mathbb N\}$.
+Consider a $\sigma$-field on $\Omega$ given by $\mathcal F_{[I]} = \sigma( X(t): t \in [I])$. 
+Then by standard measure theory, we have 
+\begin{align}
+\label{eq:key_for_714}
+\mathcal F_{[I]} = \{ \psi_I^{-1} B: B \in \mathcal R^{\mathbb N}\}.
+\end{align}
+
+Define the family of subsets of $\Omega$ by 
+\begin{align}
+\mathcal G := \{A \subset \Omega: \exists I \in \mathcal I, B \in \mathcal R^\mathbb N~s.t.~A = \psi_I^{-1} B\}.
+\end{align}
+What we needs to proof for this exercise is that $\mathcal G \subset \mathcal F_o$ and $\mathcal F_o \subset \mathcal G$.
+
+1. We claim that $\mathcal G \subset \mathcal F_o$. 
+In fact for each $ A \in \mathcal G$, there is an $I \in \mathcal I$ and $B \in \mathcal R^\mathbb N$ such that $A = \psi_I^{-1}B$. 
+Therefore $ A \in \mathcal F_{[I]} \subset \mathcal F_o$.
+
+2. We claim that $\mathcal G$ is a $\sigma$-field. 
+In fact, if $(A_k)_{k \in \mathbb N}$ is a sequence of elements in $\mathcal G$, then there exists a sequence of $\mathcal I$-elements $(I_k)_{k \in \mathbb N}$ and a sequence of $\mathcal R^\mathbb N$-elements $(B_k)_{k \in \mathbb N}$ such that
+\begin{align}
+A_k = \psi_{I_k}^{-1}B_k, \quad k \in \mathbb N.
+\end{align}
+We also have that there exists a $J \in \mathcal I$ such that
+\begin{align}
+[J] = \bigcup_{k \in \mathbb N} [I_k]
+\end{align}
+simply because the right hand side is countable. 
+Now, from \eqref{eq:key_for_714}, we have $\bigcup_{k\in \mathbb N} A_k \in \sigma(\mathcal F_{[I_k]}: k \in \mathbb N) = \mathcal F_{[J]}\subset \mathcal G$. 
+The rest of this claim is elementary.
+
+3. We claim that $\mathcal F_o \subset \mathcal G$. In fact, for each $t\in [0, \infty)$, we have $X(t)$ is $\mathcal G$-measurable simply because $\mathcal F_{t}\subset \mathcal G$. 
+\end{proof}
+% *** 7.1.5
+\begin{exe}[7.1.5.]
+Looking at the proof of Theorem 7.1.6. carefully shows that if $\gamma > 5/6$ then $B_t$ is not H\"{o}lder continuous with exponent $\gamma$ at any point in $[0,1]$. 
+Show, by considering $k$ increments instead of $3$, that the last conclusion is true for all $\gamma > 1/2 + 1/k$.
+\end{exe}
+\begin{proof}
+Fix a constant $C < \infty$.
+Let $A_n = \{w: \exists s \in [0,1]~s.t.~ \forall |t-s|\leq \frac{k}{n}, |B_t - B_s| \leq C |t-s|^\gamma\}$.
+For $1 \leq i \leq n - k + 1$, let 
+\begin{align}
+Y_{i,n} = \max\{|B(\frac{i+j}{n}) - B(\frac{i+j-1}{n})|: j = 0,1,\dots,k - 1\}.
+\end{align}
+and
+\begin{align}
+B_n = \{\text{at least one } Y_{k,n} \leq \frac{(2k - 1)C}{ n^{\gamma}}\}.
+\end{align}
+Then it can be verified that $A_n \subset B_n$.
+Therefore
+\begin{align}
+P(A_n) &\leq P(B_n)
+  \leq n P\left( |B(\frac{1}{n})| \leq \frac{(2k - 1) C}{n^{\gamma}} \right)^k
+\\& \leq n P(|B(1)|\leq \frac{(2k - 1) C}{n^{\gamma - \frac{1}{2}}})^k
+  \\& \leq n \left( \frac{2(2k-1) C}{ \sqrt{2\pi} n^{\gamma - \frac{1}{2}}} \right)^k 
+\to 0.
+\end{align}
+Rest is the same as Theorem 7.1.6.
+\end{proof}
+% *** 7.1.6
+\begin{exe}[7.1.6.]
+Fix $t$ and let $\Delta_{m,n} = B(tm2^{-n}) - B(t(m-1)2^{-n})$.
+Compute
+\begin{align}
+  E\left[ \left( \sum_{m \leq 2^n} \Delta^2_{m,n} - t \right)^2 \right]
+\end{align}
+ and use Borel-Cantelli to conclude that $\sup_{m \leq 2^n} \Delta_{m,n}^2 \to t$ a.s. as $n \to \infty$. 
+\end{exe}
+\begin{proof}
+\begin{align}
+  &E\left[\left( \sum_{m=1}^{2^n} \Delta_{m,n}^2 - t \right)^2\right]
+    = \sum_{m = 1}^{2^n} E\left( \Delta_{m,n}^2 - \frac{t}{2^n} \right)^2
+\\& = 2^n E\left[\left(B(\frac{t}{2^n}) - \frac{t}{2^n}\right)^2\right] = t^2 2^{-n +1}.
+\end{align}
+Therefore,
+\begin{align}
+  P\left( \left| \sum_{m=1}^{2^n} \Delta_{m,n}^2 - t \right| > \frac{1}{n} \right)
+\leq n^2 t^2 2^{-n +1}.
+\end{align}
+This says that 
+\begin{align}
+P\Big( \Big| \sum_{m = 1}^{2^n} \Delta_{m,n}^2 - t \Big| > \frac{1}{n}~i.o.  \Big) = 0.
+\end{align}
+So we get the desired result by BC Lemma.
+\end{proof}
+% ** Section: HW for 7.2 and 7.3
+% *** 7.2.1.
+\begin{exe}[7.2.1.]
+  Let $T_0 = \inf\left\{ s> 0: B_s = 0 \right\}$ and let $R = \inf \left\{ t > 1: B_t = 0 \right\}$. $R$ is for right or return. Use the Markov property at time $1$ to get 
+  \begin{align}
+P_x(R > 1+t)  = \int p_1(x,y) P_y(T_0 > t) dy
+  \end{align}
+\end{exe}
+\begin{proof}
+Notice that $R = T_0 \circ \theta_1 + 1$, therefore from Theorem 7.2.1. we have
+\begin{align}
+  &E_x\left(  \mathbf 1_{R(\cdot)> 1+t} \middle| \mathcal F_1^+ \right)
+= E_x\left(  \mathbf 1_{ (T_0 \circ \theta_1)>t} \middle| \mathcal F_1^+ \right)
+\\&  = E_x\left[  \left(\mathbf 1_{ T_0>t} \circ \theta_1 \right)(\omega) \middle| \mathcal F_1^+ \right]
+  \\&  = E_{B_1}\left[  \mathbf 1_{ T_0>t} \right] = \int p_1(x,y) P_y(T_0 > t) dy.
+\end{align}
+\end{proof}
+% *** 7.2.3.
+\begin{exe}[7.2.3.]
+Let $a< b$, then with probability one $a$ is the limit of local maximum of $B_t$ in $(a,b)$.
+So the set of local maxima of $B_t$ is almost surely a dense set.
+However, unlike the zero set it is countable.
+\end{exe}
+\begin{proof}
+From Theorem 7.2.5., we know that $T_0:= \inf\{t \in (a,b): B_t = B_a\} = a$ almost surely. This says that there exists a $\Omega_0$ with probability $1$ such that for any $\omega \in \Omega_0$, there exists a strictly decreasing sequence of $t_n$ with $B_{t_n} = B_a$ and $t_n \downarrow a$.
+
+From Theorem 7.2.4., we know that $T_1:= \inf\{t \in (a,b): B_t > B_a\} = a$ almost surely. This says that there exists a $\Omega_1$ with probability $1$ such that for any $\omega \in \Omega_1$, there exists a strictly decreasing sequence of $s_n$ with $B_{s_n} > B_a$ and $s_n \downarrow a$.
+
+Therefore, by chosen suitable subsequence, we know that for each $\omega \in \Omega_0 \cap \Omega_1$, there exists a strictly decreasing sequence
+\begin{align}
+t_1 > s_1 > t_2 > s_2 > \dots 
+\end{align}
+such that $B_{t_k} = B_a$ and $B_{s_k} > B_a$ for each $k \in \mathbb N$ and that both $t_k \downarrow a$ and $s_k \downarrow a$ hold.
+Now since the Brownian path are continuous, there will be a sequence of $(r_k)_{k\in \mathbb N}$ such that
+\begin{align}
+t_1 > r_1 > t_2 > r_2 > \dots
+\end{align}
+and each $r_k$ is a local maxima. (Simply chose $r_k\in (t_k, t_{k+1})$ such that $B_{r_k} = \max\{ B_r: r\in [t_k, t_{k+1}] \}$.)
+
+To summarize, for each $a< b$, we have almost surely that $a$ is the limit of local maximum of $B_t$ in $(a,b)$.
+Therefore, almost surely, for each $q\in \mathbb Q$, we have $q$ is in the closure of the set of local maximum of the Brownian path. 
+In another word, almost surely, the set of local maxima of Brownian path is a dense set.
+\end{proof}
+% *** 7.2.4.
+\begin{exe}[7.2.4.]
+(i) Suppose $f(t)>0$ for all $t>0$. 
+Use Theorem $7.2.3.$ to conclude that $\limsup_{t\downarrow 0}B(t)/f(t) = c$, $P_0$ a.s., where $c \in [0,\infty]$ is a constant.
+(ii) Show that if $f(t) = \sqrt{t}$ then $c = \infty$, so with probability one Brownian paths are not H\"older continuous of order $1/2$ at $0$. 
+\end{exe}
+\begin{proof}
+(i). Define $C = \limsup_{t\downarrow 0} B(t)/f(t)$, then $C$ is a random variable which is $\mathcal F_0^+$-measurable. It can also be verified that $C$ takes values in $[0, \infty]$ from Theorem 7.2.4., since there exists a sequence of strictly decreasing $t_0 \downarrow 0$ with $B(t_0)>0$.
+
+Now use Theorem 7.2.3. we know that $C$ almost surely is a constant.
+
+(ii). Define $X_t = t B(1/t)$, then by Theorem 7.2.6. and Theorem 7.2.8 we have
+\begin{align}
+&\limsup_{t\downarrow 0} \frac{B(t)}{ \sqrt{t}} 
+  = \limsup_{t\downarrow 0} \frac{t X(1/t)}{\sqrt{t}}
+\\&= \limsup_{u\to \infty} \frac{X(u)}{\sqrt{u}}
+= \infty.
+\end{align}
+\end{proof}
+% *** 7.3.1.
+\begin{exe}[7.3.1.]
+Let $A$ be an $F_\sigma$, that is, a countable union of closed sets.
+Show that $T_A = \inf\left\{ t : B_t \in A \right\}$ is a stopping time.
+\end{exe}
+\begin{proof}
+Let 
+\begin{align}
+A = \bigcup_{n \in \mathbb N} K_n
+\end{align}
+where $K_n$ are closed sets. 
+Define closed sets $A_n = \bigcup_{k = 1}^n K_k$, then we have
+\begin{align}
+A = \bigcup_{n \in \mathbb N} A_n
+\end{align}
+Define $T_{(A_n)} = \inf\{t : B_t \in A_n\}$ which by Theorem 7.3.4. are stopping times.
+Now notice that 
+\begin{align}
+\bigcup_{n \in \mathbb N} \{t : B_t \in A_n\} = \{t: B_t \in A\}.
+\end{align}
+So we must have 
+\begin{align}
+T_A = \inf_{n\in \mathbb N} T_{(A_n)} = \lim_{n\to \infty} T_{(A_n)}. 
+\end{align}
+Theorem 7.3.2. then says that $T_A$ is a stopping time.
+\end{proof}
+% *** 7.3.2.
+\begin{exe}[7.3.2.]
+If $S$ and $T$ are stopping times, then $S \wedge T = \min \{S, T\}$, $S\vee T = \max\{S, T\}$, and $S+T$ are also stopping times.
+In particular, if $t \geq 0$, then $S \wedge t, S \vee t$ and $S+ t$ are stopping times.
+\end{exe}
+\begin{proof}
+It can be verified that for each $t> 0$,
+\begin{align}
+\{S \wedge T > t\} = \{S > t\} \cap \{T > t\} \in \mathcal F_t,
+\end{align}
+and
+\begin{align}
+\{S \vee T > t\}= \{S>t\} \cup \{T > t\} \in \mathcal F_t,
+\end{align}
+and
+\begin{align}
+&\{S + T < t\} = \{\exists q_1,q_2 \in \mathbb Q,~\text{s.t.}~S \leq q_1, T \leq q_2, q_1 + q_2 < t\}
+\\&= \bigcup_{q_1,q_2 \in \mathbb Q: 0 \leq q_1 + q_2 \leq t} \{S \leq q_1, T\leq q_2\} \in \mathcal F_t. 
+\end{align}
+\end{proof}
+% *** 7.3.4.
+\begin{exe}[7.3.4.]
+Let $S$ be a stopping time, let $A \in \mathcal F_S$, and let $R = S$ on $A$ and $R = \infty$ on $A^c$. 
+Show that $R$ is a stopping time.
+\end{exe}
+\begin{proof}
+It can be verified that for each $t\in [0,\infty)$
+  \begin{align}
+\{R \leq t\} = \{A, S \leq t\} \in \mathcal F_t.
+  \end{align}
+\end{proof}
+% *** 7.3.5.
+\begin{exe}[7.3.5.]
+Let $S$ and $T$ be stopping times. 
+$\{S < T\}$, $\{S > T\}$, and $\{ S = T\}$ are in $\mathcal F_S$ (and in $\mathcal F_T$).
+\end{exe}
+\begin{proof}
+It can be verified that, for each $s> 0$,
+\begin{align}
+&\{S < T\} \cap \{S < s\} = \{\exists q \in \mathbb Q \cap (0,s),~ \text{s.t.}~S < q < T \}
+\\&= \bigcup_{q\in \mathbb Q \cap(0,s)} \{ S < q, T>q\} 
+\in \mathcal F_s.
+\end{align}
+This shows that $\{S < T\}\in \mathcal F_S$.
+It can also be verified that, for each $s>0$,
+\begin{align}
+&\{S > T\} \cap \{S < s\} 
+= \{\exists q \in \mathbb Q,~ \text{s.t.}~T < q < S < s\}
+\\&= \bigcup_{q\in \mathbb Q:0 < q < s}\left(\{ T < q \} \cup \{q<S<s\}\right) 
+\in \mathcal F_s. 
+\end{align}
+This says that $\{S> T\}\in \mathcal F_S$. Finally
+\begin{align}
+  \{S = T\} = \left( \{S>T\} \cup \{S< T\} \right)^c \in \mathcal F_S.
+\end{align}
+\end{proof}
+% ** END
+\end{document}
