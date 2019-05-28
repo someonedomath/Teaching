@@ -395,5 +395,149 @@ P\Big( \Big| \sum_{m = 1}^{2^n} \Delta_{m,n}^2 - t \Big| > \frac{1}{n}~i.o.  \Bi
 \end{align}
 So we get the desired result by BC Lemma.
 \end{proof}
+% ** Section: HW for 7.2 and 7.3
+% *** 7.2.1.
+\begin{exe}[7.2.1.]
+  Let $T_0 = \inf\left\{ s> 0: B_s = 0 \right\}$ and let $R = \inf \left\{ t > 1: B_t = 0 \right\}$. $R$ is for right or return. Use the Markov property at time $1$ to get 
+  \begin{align}
+P_x(R > 1+t)  = \int p_1(x,y) P_y(T_0 > t) dy
+  \end{align}
+\end{exe}
+\begin{proof}
+Notice that $R = T_0 \circ \theta_1 + 1$, therefore from Theorem 7.2.1. we have
+\begin{align}
+  &E_x\left(  \mathbf 1_{R(\cdot)> 1+t} \middle| \mathcal F_1^+ \right)
+= E_x\left(  \mathbf 1_{ (T_0 \circ \theta_1)>t} \middle| \mathcal F_1^+ \right)
+\\&  = E_x\left[  \left(\mathbf 1_{ T_0>t} \circ \theta_1 \right)(\omega) \middle| \mathcal F_1^+ \right]
+  \\&  = E_{B_1}\left[  \mathbf 1_{ T_0>t} \right] = \int p_1(x,y) P_y(T_0 > t) dy.
+\end{align}
+\end{proof}
+% *** 7.2.3.
+\begin{exe}[7.2.3.]
+Let $a< b$, then with probability one $a$ is the limit of local maximum of $B_t$ in $(a,b)$.
+So the set of local maxima of $B_t$ is almost surely a dense set.
+However, unlike the zero set it is countable.
+\end{exe}
+\begin{proof}
+From Theorem 7.2.5., we know that $T_0:= \inf\{t \in (a,b): B_t = B_a\} = a$ almost surely. This says that there exists a $\Omega_0$ with probability $1$ such that for any $\omega \in \Omega_0$, there exists a strictly decreasing sequence of $t_n$ with $B_{t_n} = B_a$ and $t_n \downarrow a$.
+
+From Theorem 7.2.4., we know that $T_1:= \inf\{t \in (a,b): B_t > B_a\} = a$ almost surely. This says that there exists a $\Omega_1$ with probability $1$ such that for any $\omega \in \Omega_1$, there exists a strictly decreasing sequence of $s_n$ with $B_{s_n} > B_a$ and $s_n \downarrow a$.
+
+Therefore, by chosen suitable subsequence, we know that for each $\omega \in \Omega_0 \cap \Omega_1$, there exists a strictly decreasing sequence
+\begin{align}
+t_1 > s_1 > t_2 > s_2 > \dots 
+\end{align}
+such that $B_{t_k} = B_a$ and $B_{s_k} > B_a$ for each $k \in \mathbb N$ and that both $t_k \downarrow a$ and $s_k \downarrow a$ hold.
+Now since the Brownian path are continuous, there will be a sequence of $(r_k)_{k\in \mathbb N}$ such that
+\begin{align}
+t_1 > r_1 > t_2 > r_2 > \dots
+\end{align}
+and each $r_k$ is a local maxima. (Simply chose $r_k\in (t_k, t_{k+1})$ such that $B_{r_k} = \max\{ B_r: r\in [t_k, t_{k+1}] \}$.)
+
+To summarize, for each $a< b$, we have almost surely that $a$ is the limit of local maximum of $B_t$ in $(a,b)$.
+Therefore, almost surely, for each $q\in \mathbb Q$, we have $q$ is in the closure of the set of local maximum of the Brownian path. 
+In another word, almost surely, the set of local maxima of Brownian path is a dense set.
+\end{proof}
+% *** 7.2.4.
+\begin{exe}[7.2.4.]
+(i) Suppose $f(t)>0$ for all $t>0$. 
+Use Theorem $7.2.3.$ to conclude that $\limsup_{t\downarrow 0}B(t)/f(t) = c$, $P_0$ a.s., where $c \in [0,\infty]$ is a constant.
+(ii) Show that if $f(t) = \sqrt{t}$ then $c = \infty$, so with probability one Brownian paths are not H\"older continuous of order $1/2$ at $0$. 
+\end{exe}
+\begin{proof}
+(i). Define $C = \limsup_{t\downarrow 0} B(t)/f(t)$, then $C$ is a random variable which is $\mathcal F_0^+$-measurable. It can also be verified that $C$ takes values in $[0, \infty]$ from Theorem 7.2.4., since there exists a sequence of strictly decreasing $t_0 \downarrow 0$ with $B(t_0)>0$.
+
+Now use Theorem 7.2.3. we know that $C$ almost surely is a constant.
+
+(ii). Define $X_t = t B(1/t)$, then by Theorem 7.2.6. and Theorem 7.2.8 we have
+\begin{align}
+&\limsup_{t\downarrow 0} \frac{B(t)}{ \sqrt{t}} 
+  = \limsup_{t\downarrow 0} \frac{t X(1/t)}{\sqrt{t}}
+\\&= \limsup_{u\to \infty} \frac{X(u)}{\sqrt{u}}
+= \infty.
+\end{align}
+\end{proof}
+% *** 7.3.1.
+\begin{exe}[7.3.1.]
+Let $A$ be an $F_\sigma$, that is, a countable union of closed sets.
+Show that $T_A = \inf\left\{ t : B_t \in A \right\}$ is a stopping time.
+\end{exe}
+\begin{proof}
+Let 
+\begin{align}
+A = \bigcup_{n \in \mathbb N} K_n
+\end{align}
+where $K_n$ are closed sets. 
+Define closed sets $A_n = \bigcup_{k = 1}^n K_k$, then we have
+\begin{align}
+A = \bigcup_{n \in \mathbb N} A_n
+\end{align}
+Define $T_{(A_n)} = \inf\{t : B_t \in A_n\}$ which by Theorem 7.3.4. are stopping times.
+Now notice that 
+\begin{align}
+\bigcup_{n \in \mathbb N} \{t : B_t \in A_n\} = \{t: B_t \in A\}.
+\end{align}
+So we must have 
+\begin{align}
+T_A = \inf_{n\in \mathbb N} T_{(A_n)} = \lim_{n\to \infty} T_{(A_n)}. 
+\end{align}
+Theorem 7.3.2. then says that $T_A$ is a stopping time.
+\end{proof}
+% *** 7.3.2.
+\begin{exe}[7.3.2.]
+If $S$ and $T$ are stopping times, then $S \wedge T = \min \{S, T\}$, $S\vee T = \max\{S, T\}$, and $S+T$ are also stopping times.
+In particular, if $t \geq 0$, then $S \wedge t, S \vee t$ and $S+ t$ are stopping times.
+\end{exe}
+\begin{proof}
+It can be verified that for each $t> 0$,
+\begin{align}
+\{S \wedge T > t\} = \{S > t\} \cap \{T > t\} \in \mathcal F_t,
+\end{align}
+and
+\begin{align}
+\{S \vee T > t\}= \{S>t\} \cup \{T > t\} \in \mathcal F_t,
+\end{align}
+and
+\begin{align}
+&\{S + T < t\} = \{\exists q_1,q_2 \in \mathbb Q,~\text{s.t.}~S \leq q_1, T \leq q_2, q_1 + q_2 < t\}
+\\&= \bigcup_{q_1,q_2 \in \mathbb Q: 0 \leq q_1 + q_2 \leq t} \{S \leq q_1, T\leq q_2\} \in \mathcal F_t. 
+\end{align}
+\end{proof}
+% *** 7.3.4.
+\begin{exe}[7.3.4.]
+Let $S$ be a stopping time, let $A \in \mathcal F_S$, and let $R = S$ on $A$ and $R = \infty$ on $A^c$. 
+Show that $R$ is a stopping time.
+\end{exe}
+\begin{proof}
+It can be verified that for each $t\in [0,\infty)$
+  \begin{align}
+\{R \leq t\} = \{A, S \leq t\} \in \mathcal F_t.
+  \end{align}
+\end{proof}
+% *** 7.3.5.
+\begin{exe}[7.3.5.]
+Let $S$ and $T$ be stopping times. 
+$\{S < T\}$, $\{S > T\}$, and $\{ S = T\}$ are in $\mathcal F_S$ (and in $\mathcal F_T$).
+\end{exe}
+\begin{proof}
+It can be verified that, for each $s> 0$,
+\begin{align}
+&\{S < T\} \cap \{S < s\} = \{\exists q \in \mathbb Q \cap (0,s),~ \text{s.t.}~S < q < T \}
+\\&= \bigcup_{q\in \mathbb Q \cap(0,s)} \{ S < q, T>q\} 
+\in \mathcal F_s.
+\end{align}
+This shows that $\{S < T\}\in \mathcal F_S$.
+It can also be verified that, for each $s>0$,
+\begin{align}
+&\{S > T\} \cap \{S < s\} 
+= \{\exists q \in \mathbb Q,~ \text{s.t.}~T < q < S < s\}
+\\&= \bigcup_{q\in \mathbb Q:0 < q < s}\left(\{ T < q \} \cup \{q<S<s\}\right) 
+\in \mathcal F_s. 
+\end{align}
+This says that $\{S> T\}\in \mathcal F_S$. Finally
+\begin{align}
+  \{S = T\} = \left( \{S>T\} \cup \{S< T\} \right)^c \in \mathcal F_S.
+\end{align}
+\end{proof}
 % ** END
 \end{document}
