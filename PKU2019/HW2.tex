@@ -539,5 +539,157 @@ This says that $\{S> T\}\in \mathcal F_S$. Finally
   \{S = T\} = \left( \{S>T\} \cup \{S< T\} \right)^c \in \mathcal F_S.
 \end{align}
 \end{proof}
+% *** 7.4.1
+\begin{exe}
+Let $B_t = (B_t^1, B_t^2)$ be a two-dimensional Brownian motion starting from $0$.
+Let $T_a = \inf\{t: B_t^2 = a\}$.
+Show that (1) $B^1(T_a), a\geq 0$ has independent (stationary) increments and (2) $B^1(T_a) = _d aB^1(T_1)$.
+Use this to conclude that $B^1(T_a)$ has a Cauchy distribution. 
+\end{exe}
+\begin{proof}
+  (1) Suppose that $0 = a_0 < a_1 < \dots a_{n} = u < a_{n+1} = v$. Thanks to induction, in order to show that increments $\{B^1(T_{(a_{(k+1)})}) - B^1(T_{(a_k)}):k=0,\dots,n\}$ are mutually independent with each other, we only have to show that the last increment $B^1(T_{v})- B^1(T_{u})$ is independent of the previous increments $\{B^1(T_{(a_{(k+1)})}) - B^1(T_{(a_k)}):k=0,\dots,n - 1\}$.
+Notice that all $(T_{a})_{a\geq 0}$ are stopping times of the two-dimensional Brownian motion $(B_t)_{t\geq 0}$ whose corresponding filtration will be denote by $(\mathcal F_t)_{t\geq 0}$. 
+Then it is easy to see that the previous increments $\{B^1(T_{(a_{k+1})}) - B^1(T_{(a_k)}):k=0,\dots,n - 1\}$ are $\mathcal F_{(T_{u})}$-measurable.
+So we only have to show that $B^1(T_v) - B^1(T_u)$ is independent of the $\sigma$-field $\mathcal F_{(T_u)}$. 
+Now from the strong Markov property: for any bounded function $f$,
+\begin{align}
+&E\left[f\left(B^1(T_v) - B^1(T_u)\right) | \mathcal F_{(T_u)}\right]
+= E_{(B^1(T_u), u)} \left[ f\left( B^1(T_v) - B^1(0) \right) \right]
+\\&= E_{(0,0)}\left[ f \left( B^1(T_{v-u}) \right)\right].
+\end{align}
+The RHS is non-random, so $B^1(T_v)- B^1(T_u)$ is independent of the $\sigma$-field $\mathcal F_{(T_u)}$.
+The RHS also says that the distribution of $B^1(T_u) - B^1(T_v)$ is only dependent on $v-u$. This is the stationary part.
+
+(2) Note that from (7.1.1.) we have for each $a > 0$
+\begin{align}
+(X_s)_{s\geq 0}:=(a^{-1}B_{a^2s})_{s\geq 0} \overset{d}{=} (B_s)_{s\geq 0}
+\end{align}
+Therefore,
+\begin{align}
+B^1(T_a) 
+&= B^1(\inf\{t: B^2(t) = a\}) 
+= B^1(a^2\inf\{ s: a^{-1}B^2(a^2 s) = 1\})
+\\&= a \cdot X^1(\inf\{s:X^2_s = 1\})
+\overset{d}{=}aB^1(T_1)  
+\end{align}
+
+(3). From (1) we have that
+\begin{align}
+B^1(T_n) \overset{d}= \sum_{k=0}^{n} Y_k
+\end{align}
+where $(Y_k)_{k\in \mathbb Z_+} \overset{d}= \left( B(T_{k+1}) - B(T_k) \right)_{k \in \mathbb Z_+}$ are i.i.d. random variables. So now, we have that
+\begin{align}
+B^1(T_1) \overset{d}{=} n^{-1}B^1(T_n)\overset{d}{=}n^{-1}\sum_{k=1}^n Y_k 
+\xrightarrow[n\to \infty]{} B^1(T_1).
+\end{align}
+Simply notice that $(B^1_t,B^2_t)_{t\geq 0} \overset{d}= (-B^1_t,B^2_t)$, one can verify that $(Y_k)_{k\in \mathbb Z_+}$ actually have symmetric distribution.
+So $B^1(T_1)$ must have symmetric $\alpha$-stable distribution with $\alpha = 1$, which by its definition, is Cauchy distribution.
+\end{proof}
+% *** 7.4.2
+\begin{exe}[7.4.2.]
+Use (7.2.3) to show that $R:= \inf\{t>1: B_t = 0\}$ has probability density
+\begin{align}
+P_0(R -1\in dt)
+= \frac{1}{(\pi t^{1/2}(1+t))} dt.
+\end{align}
+\end{exe}
+\begin{proof}
+According to (7.2.3.) and (7.4.6), we have
+\begin{align}
+&P_0(R-1 \in dt) = \int_{y\in \mathbb R} p_1(0,y) P_y(T_0 \in dt) dy
+\\&= \int_{y\in \mathbb R} p_1(0,y) P_0(T_y \in dt) dy
+= \int_{y\in \mathbb R} p_1(0,y) \frac{1}{\sqrt{2\pi s^3}} y e^{- \frac{y^2}{2t}}~dt~dy
+\\&= \frac{1}{\pi t^{1/2} (1+t)} dt.
+\end{align}
+\end{proof}
+% *** 7.4.4
+\begin{exe}[7.4.4.]
+Let $A_{s,t}$ be the event Brownian motion has at least one zero in $[s,t]$. 
+Show that $P_0(A_{s,t}) = \frac{2}{\pi} \arccos(\sqrt{s/t})$.
+\end{exe}
+\begin{proof}
+According to 7.4.6., note that 
+  \begin{align}
+&P_0(A_{s,t}) 
+= 2\int_0^\infty p_s(0,x) P_x(T_0 \leq t-s) dx
+    \\&=2\int_0^\infty (2\pi s)^{-1/2s} e^{- x^2/2} \int_0^{t-s} (2\pi u^3)^{-1/2} x e^{-x^2/2u}~du~dx
+\\&= \frac{2}{\pi} arccos(\sqrt{s/t}).
+  \end{align}
+\end{proof}
+% *** 7.5.1
+\begin{exe}[7.5.1.]
+  Let $T = \inf\{B_t \not\in (-a,a)\}.$ Show that
+  \begin{align}
+    E_0 \exp(-\lambda T) 
+    = 1/ \cosh(a \sqrt{2\lambda})
+\end{align}
+\end{exe}
+\begin{proof}
+According to the fact that $e^{\theta B_t - \frac{1}{2} \theta^2 t}$ is a martingale, and the fact (from symmetry) that conditionally given $T$, $B_T = a$ or $B_T = -a$ with $1/2$ probability, we have that
+\begin{align}
+  1 &= E_0\left[ e^{\theta B_T - \frac{1}{2} \theta^2 T} \right]
+  \\&= E_0\left[ e^{-\frac{1}{2}\theta^2 T} \right] \cdot \frac{e^{\theta a} + e^{-\theta a}}{2}.
+\end{align}
+This implies the desired result.
+\end{proof}
+% *** 7.5.3
+\begin{exe}[7.5.3]
+Let $\sigma = \inf\{t: B_t \not\in (a,b)\}$ and let $\lambda > 0$.
+
+(1) Use the strong Markov property to show
+\begin{align}
+E_x \exp{-\lambda T_a} 
+  = E_x \left( e^{-\lambda \sigma}; T_a < T_b \right) + E_x\left( e^{-\lambda \sigma}; T_b < T_a \right) E_b \exp\{- \lambda T_a\}. 
+\end{align}
+
+(2) Interchange the roles of $a$ and $b$ to get a second equation, use Theorem 7.5.7. to get
+\begin{align}
+  E_x\left[ e^{-\lambda \sigma}; T_a < T_b \right]
+ = \sinh(\sqrt{2\lambda} (b-x))/\sinh(\sqrt{2\lambda}(b-a)).
+\end{align}
+\end{exe}
+\begin{proof}
+(1). We have that $E_x[e^{- \lambda (T_a - \sigma)}| \mathcal F_\sigma] = E_{B_\sigma}[e^{-\lambda T_a}]$. Therefore,
+\begin{align}
+  &E_x e^{-\lambda T_a} = E_x \left[ e^{-\lambda \sigma} E\left[ e^{-\lambda (T_a - \sigma)} \middle| \mathcal F_\sigma\right]\right]
+  \\&= E_x\left[ e^{-\lambda \sigma}, T_a < T_b \right] + E_x[e^{-\lambda \sigma},T_a>T_b] E_b e^{-\lambda T_a}.
+\end{align}
+
+(2). Change $a$ and $b$ in the above, we have
+\begin{align}
+  E_x\left[ e^{-\lambda T_b} \right]
+  = E_x\left[ e^{-\lambda \sigma}; T_b < T_a \right] + E_x\left[ e^{-\lambda \sigma}; T_a < T_b \right] E_a[e^{-\lambda T_b}].
+\end{align}
+According to Theorem 7.5.7., we have 
+\begin{align}
+  E_x\left[ e^{-\lambda T_a} \right] &= \exp(-(a-x)\sqrt{2\lambda});
+  \\E_x\left[ e^{-\lambda T_b} \right] &= \exp(-(b-x)\sqrt{2\lambda});
+\\ E_a[e^{-\lambda T_b}] &= E_b[e^{-\lambda T_a}] = \exp(-(b-a)\sqrt{2\lambda}).
+\end{align}
+From those, we can obtain the desired result by solving a linear equation.
+\end{proof}
+% *** 7.5.5
+\begin{exe}[7.5.5.]
+Find a martingale of the form $B_t^6 - c_1tB_t^4+c_2t^2B_t^2-c_3t^3$ and use it to compute the third moment of $T = \inf\{t: B_t \neq (-a,a)\}$.
+\end{exe}
+\begin{proof}
+It can be verified that when $c_1 = 15, c_2 = 45, c_3 = 15$, function 
+\begin{align}
+u(x,t):= x^6 - c_1 tx^4 + c_2 t^2 x^2 - c_3 t^3
+\end{align}
+solves equations
+\begin{align}
+\frac{\partial u}{\partial t} + \frac{1}{2} \frac{\partial^2 u}{ \partial x^2} = 0.
+\end{align}
+Therefore $B_t^6 - c_1tB_t^4+c_2t^2B_t^2-c_3t^3$ is a martingale.
+Now it can be calculated from bounded convergence and monotone convergence that
+\begin{align}
+  E\left[ T^3 \right]
+&= \limsup_{t\to \infty} E\left[(T\wedge t)^3\right] 
+  \\& =\limsup_{t\to \infty} c_3^{-1}E\left[ B_{T\wedge t}^6 - c_1(T\wedge t)B_{T\wedge t}^4+c_2(T\wedge t)^2 B_{T\wedge t}^2 \right]
+  \\& = c_3^{-1}E\left[ a^6 - c_1Ta^4+c_2T^2a^2 \right]
+= \frac{61}{15}a^6.
+\end{align}
+\end{proof}
 % ** END
 \end{document}
