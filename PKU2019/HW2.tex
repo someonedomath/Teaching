@@ -663,7 +663,7 @@ E_x \exp{-\lambda T_a}
 According to Theorem 7.5.7., we have 
 \begin{align}
   E_x\left[ e^{-\lambda T_a} \right] &= \exp(-(a-x)\sqrt{2\lambda});
-  \\E_x\left[ e^{-\lambda T_b} \right] &= \exp(-(b-x)\sqrt{2\lambda});
+  \\E_x\left[ e^{-\lambda T_b} \right] &= \exp(-(x-b)\sqrt{2\lambda});
 \\ E_a[e^{-\lambda T_b}] &= E_b[e^{-\lambda T_a}] = \exp(-(b-a)\sqrt{2\lambda}).
 \end{align}
 From those, we can obtain the desired result by solving a linear equation.
@@ -685,8 +685,8 @@ Therefore $B_t^6 - c_1tB_t^4+c_2t^2B_t^2-c_3t^3$ is a martingale.
 Now it can be calculated from bounded convergence and monotone convergence that
 \begin{align}
   E\left[ T^3 \right]
-&= \limsup_{t\to \infty} E\left[(T\wedge t)^3\right] 
-  \\& =\limsup_{t\to \infty} c_3^{-1}E\left[ B_{T\wedge t}^6 - c_1(T\wedge t)B_{T\wedge t}^4+c_2(T\wedge t)^2 B_{T\wedge t}^2 \right]
+&= \lim_{t\to \infty} E\left[(T\wedge t)^3\right] 
+  \\& =\lim_{t\to \infty} c_3^{-1}E\left[ B_{T\wedge t}^6 - c_1(T\wedge t)B_{T\wedge t}^4+c_2(T\wedge t)^2 B_{T\wedge t}^2 \right]
   \\& = c_3^{-1}E\left[ a^6 - c_1Ta^4+c_2T^2a^2 \right]
 = \frac{61}{15}a^6.
 \end{align}
