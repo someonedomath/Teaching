@@ -691,5 +691,101 @@ Now it can be calculated from bounded convergence and monotone convergence that
 = \frac{61}{15}a^6.
 \end{align}
 \end{proof}
+% *** 7.6.2.
+\begin{exe}[7.6.5.]
+Show that $B_t^3 - \int_0^t 3B_s ds$ is a martingale.
+\end{exe}
+\begin{proof}
+According to Ito's formula,
+\begin{align}
+ d\left( B_t^3 - \int_0^t 3 B_s ds \right)
+= 3B_t^2 dB_t + \frac{1}{2} \cdot 6 B_t dt - 3 B_t dt
+= 3 B_t^2 dB_t.
+\end{align}
+This and Theorem 7.6.4. imply that $B_t^3 - \int_0^t 3B_sds$ is a martingale.
+\end{proof}
+% *** 7.6.3.
+\begin{exe}[7.6.3.]
+Let $\beta_{2k}(t) = E_0 B_t^{2k}$. 
+Use Ito's formula to relate $\beta_{2k}(t)$ to $\beta_{2k-2}(t)$ and use this relationship to derive a formula for $\beta_{2k}(t)$.
+\end{exe}
+\begin{proof}
+According to Ito's formula:
+\begin{align}
+dB_t^{2k} = 2k B_t^{2k - 1} dB_t + \frac{1}{2} 2k(2k-1) B_t^{2k-2} dt.
+\end{align}
+Therefore,
+\begin{align}
+  &\beta_{2k}(t) 
+= E\left[ B_t^{2k} \right] 
+   = E\left[ \int_0^t 2k B_s^{2k - 1} dB_s + \frac{2k(2k-1)}{2} \int_0^t B_s^{2k-2} ds \right]
+  \\& = \frac{2k(2k-1)}{2} \int_0^t E\left[  B_s^{2k-2}  \right] ds
+  = \frac{2k(2k-1)}{2} \int_0^t E\left[  B_s^{2k-2}  \right] ds
+  \\&= \frac{2k(2k-1)}{2} \int_0^t \beta_{2(k-1)}(s) ds.
+\end{align}
+Now, it is trivial to verify that 
+\begin{align}
+\beta_{2k}(t) = (2k-1)!!\cdot t^{k}.
+\end{align} 
+\end{proof}
+% *** 7.6.5.
+\begin{exe}[7.6.5.]
+Apply Ito's formula to ($d$-dimensional) $|B_t|^2$. 
+Use this to conclude that $E_0 |B_t|^2 = td$.
+\end{exe}
+\begin{proof}
+According to Ito's formula Theorem 7.6.7., let $f(x) = |x|^2, x\in \mathbb R^d$, we have 
+\begin{align}
+  &df(B_t)
+= \sum_{k=1}^d D_kf(B_s) dB^{(k)}_s + \frac{1}{2} \sum_{k=1}^d D_{kk} f(B_s)ds
+\\&  = \sum_{k=1}^d 2B^{(k)}_s dB^{(k)}_s + \sum_{k=1}^d ds
+\end{align}
+Therefore, thanks to Theorem 7.6.4.,
+\begin{align}
+  E_0\left[ |B_t|^2 \right] 
+= E_0\left[ 2\sum_{k=1}^d \int_0^t B^{(k)}_s dB^{(k)}_s + \sum_{k=1}^d\int_0^t ds \right]
+= td.
+\end{align}
+\end{proof}
+% *** 8.1.1.
+\begin{exe}[8.1.1.]
+(In the context of the proof of Theorem 8.1.1.,) use Exercise 7.5.4. to conclude that $E(T_{U,V}^2)\leq 4 EX^4$.
+\end{exe} 
+\begin{proof}
+Recall the Exercise 7.5.4. which says that if $T_{a,b} = \inf\{t: B_t\not\in (a,b)\}$ where $a < 0< b$, then $E T^2 \leq 4 E(B_T^4)$ and $EB_T^4 \leq 36 ET^2$. Now, noting that for each $a<0<b$ $T_{a,b}, B_{(T_{a,b})} \in \mathcal F^B$ is independent of $U$ and $V$, and that from Theorem 8.1.1 $B_{(T_{U,V})} \overset{d}= X$, we have
+\begin{align}
+ & E\left[ T_{U,V}^2 \right] 
+  = \int  E_0\left[ T^2_{u,v} \right]  P\left( U\in du, V \in dv \right) 
+  \\& \leq 4 \int E_0\left[ B_{T_{u,v}}^4 \right] P\left( U \in du, V \in dv \right)  
+  = 4 E_0 \left[ B_{(T_{U,V})}^4 \right] 
+= 4 E X^4 .
+\end{align} 
+\end{proof}
+% *** 8.1.2.
+\begin{exe}[8.1.2.]
+Suppose $S_n$ is one-dimensional simple random walk and let 
+\begin{align}
+R_n = 1 + \max_{m\leq n} S_m - \min_{m\leq n} S_m
+\end{align}
+be the number of points visited by time $n$. 
+Show that 
+\begin{align}
+R_n / \sqrt{n} \xrightarrow[t\to \infty]{d} \text{something}.
+\end{align}
+\end{exe}
+\begin{proof}
+For each continuous function $f$ on $[0,1]$, consider functional 
+$Rf:= \sup_{t\in [0,1]} f(t) - \inf_{t\in [0,1]} f(t) $.
+Then $R$ is a continuous map from $C[0,1]$ to $\mathbb R$.
+Now Theorem 8.1.5. says that
+\begin{align}
+R \left( S(n \cdot)/\sqrt{n} \right) \xrightarrow[n\to \infty]{d} R B,
+\end{align}
+where $B$ is a Brownian motion on $[0,1]$, and therefore $RB$ is a random variable.
+Finally, note that
+\begin{align}
+(R_n-1)/\sqrt{n} = R(S(n\cdot)/\sqrt{n}), \quad n\geq 0.
+\end{align}
+\end{proof}
 % ** END
 \end{document}
